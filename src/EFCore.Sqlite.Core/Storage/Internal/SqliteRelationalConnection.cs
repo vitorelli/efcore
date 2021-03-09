@@ -66,7 +66,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 
                 if (relationalOptions.Connection != null)
                 {
-                    //lock (_internalLock)
+                    lock (_internalLock)
                     {
                         InitializeDbConnection(relationalOptions.Connection);
                     } 
