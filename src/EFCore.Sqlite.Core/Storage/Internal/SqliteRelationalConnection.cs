@@ -37,6 +37,7 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
         private readonly IDiagnosticsLogger<DbLoggerCategory.Infrastructure> _logger;
         private readonly bool _loadSpatialite;
         private readonly int? _commandTimeout;
+        private static readonly object _internalLock = new object();
 
         /// <summary>
         ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -65,7 +66,10 @@ namespace Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal
 
                 if (relationalOptions.Connection != null)
                 {
-                    InitializeDbConnection(relationalOptions.Connection);
+                    //lock (_internalLock)
+                    {
+                        InitializeDbConnection(relationalOptions.Connection);
+                    } 
                 }
             }
         }
